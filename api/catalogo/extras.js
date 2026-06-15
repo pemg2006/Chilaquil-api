@@ -1,11 +1,17 @@
+const { query } = require('../../lib/db');
 const { enviarError } = require('../../lib/respuestas');
 
-// TODO (#10 - Aaron): GET /api/catalogo/extras
-// Response 200: [{ id, nombre }]
-// Depende de: #6, #7
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
     return enviarError(res, 405, 'METODO_NO_PERMITIDO', 'Usa GET');
   }
-  enviarError(res, 501, 'NO_IMPLEMENTADO', 'GET /api/catalogo/extras pendiente');
+
+  try {
+    const { rows } = await query('SELECT id, nombre FROM extras ORDER BY id ASC');
+    
+    return res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener extras:', error);
+    return enviarError(res, 500, 'DB_ERROR', 'Error interno al consultar el catálogo de extras');
+  }
 };
