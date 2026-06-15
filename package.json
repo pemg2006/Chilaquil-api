@@ -11,6 +11,8 @@
     "seed": "node seed/seed.js"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.108.1",
     "pg": "^8.11.3"
   },
   "devDependencies": {
